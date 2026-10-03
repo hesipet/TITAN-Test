@@ -3,26 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>TITAN Sense</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>TITAN Sense · Precision</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0b1220;color:#e8eef7}header{background:#111c30;padding:18px 24px;border-bottom:1px solid #26344d}header h1{margin:0;font-size:22px}header p{margin:6px 0 0;color:#8fa3bf}.container{max-width:1500px;margin:auto;padding:20px}.panel{background:#111c30;border:1px solid #26344d;border-radius:12px;padding:18px;margin-bottom:18px}.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.control{display:flex;flex-direction:column;gap:5px}label{font-size:12px;color:#9eb0c8}input,button,select{background:#18263c;color:#fff;border:1px solid #334761;border-radius:7px;padding:9px 11px}input{width:110px}button{cursor:pointer}button:hover{background:#223653}.status{margin-top:12px;padding:10px;border-radius:7px;background:#0c1627;color:#91b5dc;font-family:monospace}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.tab{cursor:pointer;padding:9px 15px;border-radius:7px;background:#18263c;border:1px solid #334761}.tab.active{background:#245b91}.view{display:none}.view.active{display:block}.chart-container{position:relative;height:430px;width:100%}.stft-container{position:relative;width:100%;height:600px;background:#080e18;border-radius:8px;overflow:hidden}.stft-container canvas{position:absolute;left:0;top:0;width:100%!important;height:100%!important}canvas{width:100%!important;height:100%!important}.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:15px}.metric{background:#0c1627;border:1px solid #26344d;padding:14px;border-radius:8px}.metric-title{color:#91a4bd;font-size:12px}.metric-value{font-size:20px;margin-top:5px}pre{white-space:pre-wrap;word-break:break-word;background:#080e18;padding:12px;border-radius:7px;max-height:220px;overflow:auto}.small{font-size:12px;color:#8498b2}.success{color:#7bcf9b}.error{color:#e17e7e}.warning{color:#e7b36b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#0b1220;color:#e8eef7}
+header{background:#111c30;padding:18px 24px;border-bottom:1px solid #26344d}
+header h1{margin:0;font-size:22px}
+header p{margin:6px 0 0;color:#8fa3bf}
+.container{max-width:1500px;margin:auto;padding:20px}
+.panel{background:#111c30;border:1px solid #26344d;border-radius:12px;padding:18px;margin-bottom:18px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.control{display:flex;flex-direction:column;gap:5px}
+label{font-size:12px;color:#9eb0c8}
+input,button,select{background:#18263c;color:#fff;border:1px solid #334761;border-radius:7px;padding:9px 11px}
+input{width:110px}
+button{cursor:pointer}
+button:hover{background:#223653}
+.status{margin-top:12px;padding:10px;border-radius:7px;background:#0c1627;color:#91b5dc;font-family:monospace}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+.tab{cursor:pointer;padding:9px 15px;border-radius:7px;background:#18263c;border:1px solid #334761}
+.tab.active{background:#245b91}
+.view{display:none}
+.view.active{display:block}
+.chart-container{position:relative;height:430px;width:100%}
+.stft-container{position:relative;width:100%;height:600px;background:#080e18;border-radius:8px;overflow:hidden}
+.stft-container canvas{position:absolute;left:0;top:0;width:100%!important;height:100%!important}
+canvas{width:100%!important;height:100%!important}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:15px}
+.metric{background:#0c1627;border:1px solid #26344d;padding:14px;border-radius:8px}
+.metric-title{color:#91a4bd;font-size:12px}
+.metric-value{font-size:20px;margin-top:5px}
+pre{white-space:pre-wrap;word-break:break-word;background:#080e18;padding:12px;border-radius:7px;max-height:220px;overflow:auto}
+.success{color:#7bcf9b}.error{color:#e17e7e}.warning{color:#e7b36b}
 </style>
 </head>
 <body>
 <header>
-<h1>TITAN Sense</h1>
-<p>TARAHAN MACHINERY</p>
+<h1>TITAN Sense · Precision</h1>
+<p>TARAHAN MACHINERY — High-Accuracy Integration · Interpolated FFT · Quality Control</p>
 </header>
 <div class="container">
 <div class="panel">
 <div class="controls">
-<div class="control"><label>Sample Rate (Hz)</label><input id="sampleRate" type="number" value="1000" min="1" step="1"></div>
-<div class="control"><label>HPF Cutoff (Hz)</label><input id="cutoffFreq" type="number" value="5" min="0.01" step="0.1"></div>
-<div class="control"><label>FFT Size</label><select id="fftSize"><option value="256">256</option><option value="512">512</option><option value="1024" selected>1024</option><option value="2048">2048</option><option value="4096">4096</option></select></div>
+<div class="control"><label>Sample Rate (Hz)</label><input id="sampleRate" type="number" value="100" min="1" step="1"></div>
+<div class="control"><label>HPF Cutoff (Hz)</label><input id="cutoffFreq" type="number" value="1" min="0.1" step="0.1"></div>
+<div class="control"><label>FFT Size</label><select id="fftSize"><option value="256">256</option><option value="512">512</option><option value="1024" selected>1024</option><option value="2048">2048</option><option value="4096">4096</option><option value="8192">8192</option></select></div>
 <div class="control"><label>STFT Window</label><select id="stftWindow"><option value="128">128</option><option value="256" selected>256</option><option value="512">512</option><option value="1024">1024</option></select></div>
-<div class="control"><label>STFT Hop</label><select id="stftHop"><option value="32">32</option><option value="64" selected>64</option><option value="128">128</option><option value="256">256</option></select></div>
-<div class="control"><label>Baud Rate</label><select id="baudRate"><option value="9600" selected>9600</option><option value="19200">19200</option><option value="38400">38400</option><option value="57600">57600</option><option value="115200">115200</option></select></div>
+<div class="control"><label>STFT Hop</label><select id="stftHop"><option value="16">16</option><option value="32">32</option><option value="64" selected>64</option><option value="128">128</option></select></div>
+<div class="control"><label>Window</label><select id="winType"><option value="hann" selected>Hann</option><option value="hamming">Hamming</option><option value="blackman">Blackman</option><option value="flattop">Flat-Top</option></select></div>
+<div class="control"><label>Baud Rate</label><select id="baudRate"><option value="9600">9600</option><option value="19200">19200</option><option value="38400">38400</option><option value="57600">57600</option><option value="115200" selected>115200</option></select></div>
 <button onclick="connectSerial()">Connect Serial</button>
 <button onclick="disconnectSerial()">Disconnect</button>
 <button onclick="startTest()">Start Test</button>
@@ -32,7 +62,7 @@
 <button onclick="exportData()">Export Data</button>
 <button onclick="importData()">Import Data</button>
 </div>
-<div id="status" class="status">Ready</div>
+<div id="status" class="status">Ready — press "Start Test" to load demo data</div>
 </div>
 <div class="panel">
 <div class="tabs">
@@ -42,6 +72,7 @@
 <div class="tab" data-view="fftView">FFT</div>
 <div class="tab" data-view="phaseView">Phase</div>
 <div class="tab" data-view="stftView">STFT</div>
+<div class="tab" data-view="qualityView">Quality</div>
 <div class="tab" data-view="recordView">Record</div>
 <div class="tab" data-view="rawView">Serial</div>
 </div>
@@ -52,6 +83,8 @@
 <div class="metric"><div class="metric-title">Sample Rate</div><div id="detectedFs" class="metric-value">0 Hz</div></div>
 <div class="metric"><div class="metric-title">HPF Cutoff</div><div id="displayCutoff" class="metric-value">0 Hz</div></div>
 <div class="metric"><div class="metric-title">Duration</div><div id="duration" class="metric-value">0 s</div></div>
+<div class="metric"><div class="metric-title">FS Error</div><div id="fsError" class="metric-value">0 %</div></div>
+<div class="metric"><div class="metric-title">Alias Risk</div><div id="aliasRisk" class="metric-value">—</div></div>
 </div>
 </div>
 <div id="velocityView" class="view">
@@ -71,11 +104,15 @@
 </div>
 </div>
 <div id="fftView" class="view">
+<div class="controls" style="margin-bottom:12px">
+<div class="control"><label>Axis</label><select id="fftAxis"><option value="x" selected>X</option><option value="y">Y</option><option value="z">Z</option></select></div>
+<div class="control"><label>Source</label><select id="fftSource"><option value="displacement" selected>Displacement</option><option value="velocity">Velocity</option><option value="acceleration">Acceleration</option></select></div>
+</div>
 <div class="chart-container"><canvas id="fftChart"></canvas></div>
 <div class="metrics">
-<div class="metric"><div class="metric-title">X Peak</div><div id="peakX" class="metric-value">0 Hz</div></div>
-<div class="metric"><div class="metric-title">Y Peak</div><div id="peakY" class="metric-value">0 Hz</div></div>
-<div class="metric"><div class="metric-title">Z Peak</div><div id="peakZ" class="metric-value">0 Hz</div></div>
+<div class="metric"><div class="metric-title">Peak Freq (interp)</div><div id="peakX" class="metric-value">0 Hz</div></div>
+<div class="metric"><div class="metric-title">Peak Amplitude</div><div id="peakY" class="metric-value">0</div></div>
+<div class="metric"><div class="metric-title">Peak Order</div><div id="peakZ" class="metric-value">—</div></div>
 </div>
 </div>
 <div id="phaseView" class="view">
@@ -84,13 +121,37 @@
 <div id="stftView" class="view">
 <div class="controls" style="margin-bottom:12px">
 <div class="control"><label>Axis</label><select id="stftAxis"><option value="x" selected>X</option><option value="y">Y</option><option value="z">Z</option></select></div>
+<div class="control"><label>Source</label><select id="stftSource"><option value="displacement" selected>Displacement</option><option value="velocity">Velocity</option><option value="acceleration">Acceleration</option></select></div>
+<div class="control"><label>Colormap</label><select id="stftCmap"><option value="viridis" selected>Viridis</option><option value="inferno">Inferno</option><option value="gray">Gray</option></select></div>
+<div class="control"><label>dB Range</label><select id="stftDbRange"><option value="40">40 dB</option><option value="60" selected>60 dB</option><option value="80">80 dB</option></select></div>
 </div>
 <div class="stft-container"><canvas id="stftCanvas"></canvas></div>
+</div>
+<div id="qualityView" class="view">
+<div class="metrics">
+<div class="metric"><div class="metric-title">FS Measured</div><div id="qFs" class="metric-value">0 Hz</div></div>
+<div class="metric"><div class="metric-title">FS Jitter (std/mean)</div><div id="qJitter" class="metric-value">0 %</div></div>
+<div class="metric"><div class="metric-title">Missing Packets</div><div id="qMissing" class="metric-value">0</div></div>
+<div class="metric"><div class="metric-title">DC Offset X</div><div id="qDcX" class="metric-value">0 g</div></div>
+<div class="metric"><div class="metric-title">DC Offset Y</div><div id="qDcY" class="metric-value">0 g</div></div>
+<div class="metric"><div class="metric-title">DC Offset Z</div><div id="qDcZ" class="metric-value">0 g</div></div>
+<div class="metric"><div class="metric-title">Clip % X</div><div id="qClipX" class="metric-value">0 %</div></div>
+<div class="metric"><div class="metric-title">Clip % Y</div><div id="qClipY" class="metric-value">0 %</div></div>
+<div class="metric"><div class="metric-title">Clip % Z</div><div id="qClipZ" class="metric-value">0 %</div></div>
+<div class="metric"><div class="metric-title">SNR X (dB)</div><div id="qSnrX" class="metric-value">0</div></div>
+<div class="metric"><div class="metric-title">SNR Y (dB)</div><div id="qSnrY" class="metric-value">0</div></div>
+<div class="metric"><div class="metric-title">SNR Z (dB)</div><div id="qSnrZ" class="metric-value">0</div></div>
+<div class="metric"><div class="metric-title">Nyquist</div><div id="qNyq" class="metric-value">0 Hz</div></div>
+<div class="metric"><div class="metric-title">Oversample Factor</div><div id="qOversample" class="metric-value">—</div></div>
+<div class="metric"><div class="metric-title">Min Length OK</div><div id="qMinLen" class="metric-value">—</div></div>
+<div class="metric"><div class="metric-title">Accuracy Score</div><div id="qScore" class="metric-value">—</div></div>
+</div>
+<pre id="qualityLog" style="margin-top:15px">Run Analyze to populate quality report.</pre>
 </div>
 <div id="recordView" class="view">
 <div class="panel" style="margin-bottom:0">
 <div class="controls">
-<div class="control"><label>Record Duration</label><select id="recordDuration"><option value="2">2 s</option><option value="4">4 s</option><option value="8">8 s</option></select></div>
+<div class="control"><label>Record Duration</label><select id="recordDuration"><option value="2">2 s</option><option value="4">4 s</option><option value="8">8 s</option><option value="16">16 s</option><option value="32">32 s</option></select></div>
 <button onclick="startRecording()">Start Recording</button>
 <button onclick="downloadRecording()">Download & Analyze</button>
 </div>
@@ -104,162 +165,91 @@
 <div id="rawView" class="view">
 <pre id="serialOutput"></pre>
 <div class="controls" style="margin-top:12px">
-<div class="control" style="flex:1"><label>Send Data (Bluetooth/Serial)</label><input id="sendDataInputRaw" type="text" placeholder="Type characters to send..." style="width:100%"></div>
+<div class="control" style="flex:1"><label>Send Data</label><input id="sendDataInputRaw" type="text" placeholder="Type characters to send..." style="width:100%"></div>
 <button onclick="sendSerialDataRaw()">Send</button>
 </div>
 </div>
 </div>
 </div>
-</div>
 <script>
+"use strict";
 const G=9.80665;
+const TWO_PI=2*Math.PI;
+const BW6_Q=[0.5176380902050415,0.7071067811865476,1.9318516525781366];
+const SERIAL_BUFFER_MAX=1<<20;
+const RECORDING_MAX_SAMPLES=2000000;
+const PLOT_POINTS_MAX=4000;
+const MIN_FILTFILT_SAMPLES_FACTOR=20;
 let samples=[];
-let filtered={x:[],y:[],z:[]};
-let filteredVelocity={x:[],y:[],z:[]};
-let filteredDisplacement={x:[],y:[],z:[]};
-let velocity={x:[],y:[],z:[]};
-let displacement={x:[],y:[],z:[]};
-let serialPort=null;
-let reader=null;
-let serialBuffer="";
-let testTimer=null;
-let testRunning=false;
 let analysisCache=null;
-let timeChart=null;
-let velocityChart=null;
-let displacementChart=null;
-let fftChart=null;
-let phaseChart=null;
-let recording=false;
-let recordingBuffer=[];
-let recordingTimer=null;
-let recordingEndTime=0;
-document.querySelectorAll(".tab").forEach(tab=>{tab.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));tab.classList.add("active");document.getElementById(tab.dataset.view).classList.add("active");if(tab.dataset.view==="stftView")setTimeout(drawSTFT,20)})});
-function setStatus(text,type=""){const e=document.getElementById("status");e.textContent=text;e.className="status "+type}
-function getConfiguredSampleRate(){const v=Number(document.getElementById("sampleRate").value);return Number.isFinite(v)&&v>0?v:1000}
-function getCutoff(){const v=Number(document.getElementById("cutoffFreq").value);return Number.isFinite(v)&&v>0?v:5}
-function getBaudRate(){const v=Number(document.getElementById("baudRate").value);return Number.isFinite(v)&&v>0?v:9600}
-function estimateSampleRate(){if(samples.length<5)return getConfiguredSampleRate();const d=[];for(let i=1;i<samples.length;i++){const dt=samples[i].t-samples[i-1].t;if(Number.isFinite(dt)&&dt>0&&dt<10000)d.push(dt)}if(d.length<3)return getConfiguredSampleRate();d.sort((a,b)=>a-b);const median=d[Math.floor(d.length/2)];const fs=1000/median;return Number.isFinite(fs)&&fs>0?fs:getConfiguredSampleRate()}
-async function connectSerial(){try{if(!("serial" in navigator)){setStatus("Web Serial is not supported","error");return}if(serialPort)return;serialPort=await navigator.serial.requestPort();const baudRate=getBaudRate();await serialPort.open({baudRate});setStatus("Port opened at "+baudRate+" baud","success");readSerial()}catch(e){setStatus("Serial error: "+e.message,"error")}}
-async function readSerial(){if(!serialPort)return;try{while(serialPort.readable){reader=serialPort.readable.getReader();try{while(true){const{value,done}=await reader.read();if(done)break;if(value){const chunk=new TextDecoder().decode(value);serialBuffer+=chunk;processSerialBuffer(chunk)}}}finally{reader.releaseLock();reader=null}}}catch(e){setStatus("Serial read error: "+e.message,"error")}}
-function processSerialBuffer(chunk){const lines=serialBuffer.split(/\r?\n/);serialBuffer=lines.pop()||"";for(const line of lines)processLine(line.trim())}
-function processLine(line){if(!line)return;document.getElementById("serialOutput").textContent+=line+"\n";const v=line.split(/[,\s;]+/).map(Number).filter(Number.isFinite);if(v.length<3)return;let t,x,y,z;if(v.length>=4){t=v[0];x=v[1];y=v[2];z=v[3]}else{x=v[0];y=v[1];z=v[2];t=samples.length?samples[samples.length-1].t+1000/getConfiguredSampleRate():0}const sample={t,x,y,z};if(recording){recordingBuffer.push(sample);document.getElementById("recordedSamples").textContent=recordingBuffer.length}samples.push(sample);analysisCache=null;if(samples.length%100===0)updateTimeChart()}
-async function disconnectSerial(){try{if(reader)await reader.cancel();if(serialPort)await serialPort.close()}catch(e){}reader=null;serialPort=null;setStatus("Disconnected")}
-async function sendSerialDataRaw(){const input=document.getElementById("sendDataInputRaw");const text=input.value;if(!text)return;if(!serialPort){setStatus("Serial not connected","error");return}try{const writer=serialPort.writable.getWriter();const data=new TextEncoder().encode(text);await writer.write(data);writer.releaseLock();document.getElementById("serialOutput").textContent+="[Sent] "+text+"\n";input.value=""}catch(e){setStatus("Send error: "+e.message,"error")}}
-class BiquadHP{constructor(fs,fc,Q){this.x1=0;this.x2=0;this.y1=0;this.y2=0;const w=2*Math.PI*fc/fs;const c=Math.cos(w);const s=Math.sin(w);const a=s/(2*Q);const a0=1+a;this.b0=((1+c)/2)/a0;this.b1=(-(1+c))/a0;this.b2=((1+c)/2)/a0;this.a1=(-2*c)/a0;this.a2=(1-a)/a0}process(x){const y=this.b0*x+this.b1*this.x1+this.b2*this.x2-this.a1*this.y1-this.a2*this.y2;this.x2=this.x1;this.x1=x;this.y2=this.y1;this.y1=y;return y}}
-function highPassFilter(data,fs,fc){if(!data.length)return[];if(fc<=0||fc>=fs/2)return data.slice();const f1=new BiquadHP(fs,fc,0.5411961001461971);const f2=new BiquadHP(fs,fc,1.3065629648763766);const out=new Array(data.length);for(let i=0;i<data.length;i++)out[i]=f2.process(f1.process(data[i]));return out}
-function highPassFilter3(data,fs,fc){if(!data.length)return[];if(fc<=0||fc>=fs/2)return data.slice();const f1=new BiquadHP(fs,fc,0.5411961001461971);const f2=new BiquadHP(fs,fc,1.3065629648763766);const f3=new BiquadHP(fs,fc,0.5411961001461971);const out=new Array(data.length);for(let i=0;i<data.length;i++)out[i]=f3.process(f2.process(f1.process(data[i])));return out}
-function filtfilt(data,fs,fc){if(!data.length)return[];const forward=highPassFilter3(data,fs,fc);const reversed=forward.slice().reverse();const backward=highPassFilter3(reversed,fs,fc);return backward.reverse()}
-function integrate(signal,time){const out=new Array(signal.length);if(!signal.length)return[];out[0]=0;for(let i=1;i<signal.length;i++){let dt=(time[i]-time[i-1])/1000;if(!Number.isFinite(dt)||dt<=0||dt>1)dt=1/getConfiguredSampleRate();out[i]=out[i-1]+(signal[i-1]+signal[i])*dt*0.5}return out}
-function prepareAnalysis(){
-  if(analysisCache)return analysisCache;
-  if(samples.length<2)return null;
-  const fs=estimateSampleRate();
-  const fc=Math.min(getCutoff(),fs*0.49);
-  const time=samples.map(s=>s.t);
-  const ax=samples.map(s=>s.x*G);
-  const ay=samples.map(s=>s.y*G);
-  const az=samples.map(s=>s.z*G);
-  filtered.x=filtfilt(ax,fs,fc);
-  filtered.y=filtfilt(ay,fs,fc);
-  filtered.z=filtfilt(az,fs,fc);
-  const vx0=integrate(filtered.x,time);
-  const vy0=integrate(filtered.y,time);
-  const vz0=integrate(filtered.z,time);
-  filteredVelocity.x=filtfilt(vx0,fs,fc);
-  filteredVelocity.y=filtfilt(vy0,fs,fc);
-  filteredVelocity.z=filtfilt(vz0,fs,fc);
-  velocity.x=filteredVelocity.x;
-  velocity.y=filteredVelocity.y;
-  velocity.z=filteredVelocity.z;
-  const dx0=integrate(filteredVelocity.x,time);
-  const dy0=integrate(filteredVelocity.y,time);
-  const dz0=integrate(filteredVelocity.z,time);
-  filteredDisplacement.x=filtfilt(dx0,fs,fc);
-  filteredDisplacement.y=filtfilt(dy0,fs,fc);
-  filteredDisplacement.z=filtfilt(dz0,fs,fc);
-  displacement.x=filteredDisplacement.x;
-  displacement.y=filteredDisplacement.y;
-  displacement.z=filteredDisplacement.z;
-  analysisCache={fs,fc,time,acceleration:filtered,velocity,displacement};
-  return analysisCache;
-}
-function fftComplex(r,i){const n=r.length;let j=0;for(let k=1;k<n;k++){let bit=n>>1;while(j&bit){j^=bit;bit>>=1}j^=bit;if(k<j){[r[k],r[j]]=[r[j],r[k]];[i[k],i[j]]=[i[j],i[k]]}}for(let len=2;len<=n;len<<=1){const a=-2*Math.PI/len;const wr0=Math.cos(a),wi0=Math.sin(a);for(let start=0;start<n;start+=len){let wr=1,wi=0;for(let k=0;k<len/2;k++){const p=start+k;const q=p+len/2;const vr=r[q]*wr-i[q]*wi;const vi=r[q]*wi+i[q]*wr;const ur=r[p],ui=i[p];r[p]=ur+vr;i[p]=ui+vi;r[q]=ur-vr;i[q]=ui-vi;const nwr=wr*wr0-wi*wi0;wi=wr*wi0+wi*wr0;wr=nwr}}}}
-function fft(signal,fs,N){const r=new Float64Array(N);const im=new Float64Array(N);const input=signal.slice(0,Math.min(signal.length,N));let mean=0;for(let i=0;i<input.length;i++)mean+=input[i];mean/=Math.max(1,input.length);let winSum=0;for(let i=0;i<input.length;i++){const w=input.length>1?0.5*(1-Math.cos(2*Math.PI*i/(input.length-1))):1;r[i]=(input[i]-mean)*w;winSum+=w}const winMean=winSum/Math.max(1,input.length);fftComplex(r,im);const f=[],m=[],p=[];const normFactor=2/(input.length*winMean);for(let k=0;k<=N/2;k++){f.push(k*fs/N);m.push(normFactor*Math.sqrt(r[k]*r[k]+im[k]*im[k]));p.push(Math.atan2(im[k],r[k])*180/Math.PI)}return{frequency:f,magnitude:m,phase:p}}
-function findPeak(a,fc){let max=-Infinity,idx=-1;for(let i=0;i<a.frequency.length;i++)if(a.frequency[i]>=fc&&a.magnitude[i]>max){max=a.magnitude[i];idx=i}return idx>=0?a.frequency[idx]:0}
-function updateTimeChart(){const d=prepareAnalysis();if(!d)return;const max=3000;const s=Math.max(0,d.time.length-max);const labels=d.time.slice(s).map(v=>(v-d.time[0])/1000);const sets=[{label:"X",data:d.acceleration.x.slice(s).map(v=>v/G),borderWidth:1.2,pointRadius:0},{label:"Y",data:d.acceleration.y.slice(s).map(v=>v/G),borderWidth:1.2,pointRadius:0},{label:"Z",data:d.acceleration.z.slice(s).map(v=>v/G),borderWidth:1.2,pointRadius:0}];if(timeChart)timeChart.destroy();timeChart=new Chart(document.getElementById("timeChart"),{type:"line",data:{labels,datasets:sets},options:{responsive:true,maintainAspectRatio:false,animation:false,scales:{x:{title:{display:true,text:"Time (s)"}},y:{title:{display:true,text:"Filtered Acceleration (g)"}}}}});document.getElementById("sampleCount").textContent=samples.length;document.getElementById("detectedFs").textContent=d.fs.toFixed(4)+" Hz";document.getElementById("displayCutoff").textContent=d.fc.toFixed(4)+" Hz";document.getElementById("duration").textContent=((d.time[d.time.length-1]-d.time[0])/1000).toFixed(4)+" s"}
-function updateVelocityChart(){const d=prepareAnalysis();if(!d)return;const max=3000,s=Math.max(0,d.time.length-max),labels=d.time.slice(s).map(v=>(v-d.time[0])/1000);const sets=[{label:"X",data:d.velocity.x.slice(s).map(v=>v*1000),borderWidth:1.2,pointRadius:0},{label:"Y",data:d.velocity.y.slice(s).map(v=>v*1000),borderWidth:1.2,pointRadius:0},{label:"Z",data:d.velocity.z.slice(s).map(v=>v*1000),borderWidth:1.2,pointRadius:0}];if(velocityChart)velocityChart.destroy();velocityChart=new Chart(document.getElementById("velocityChart"),{type:"line",data:{labels,datasets:sets},options:{responsive:true,maintainAspectRatio:false,animation:false,scales:{x:{title:{display:true,text:"Time (s)"}},y:{title:{display:true,text:"Filtered Velocity (mm/s)"}}}}});document.getElementById("vxRms").textContent=rms(d.velocity.x).toFixed(4)+" mm/s";document.getElementById("vyRms").textContent=rms(d.velocity.y).toFixed(4)+" mm/s";document.getElementById("vzRms").textContent=rms(d.velocity.z).toFixed(4)+" mm/s"}
-function updateDisplacementChart(){const d=prepareAnalysis();if(!d)return;const max=3000,s=Math.max(0,d.time.length-max),labels=d.time.slice(s).map(v=>(v-d.time[0])/1000);const sets=[{label:"X",data:d.displacement.x.slice(s).map(v=>v*1e6),borderWidth:1.2,pointRadius:0},{label:"Y",data:d.displacement.y.slice(s).map(v=>v*1e6),borderWidth:1.2,pointRadius:0},{label:"Z",data:d.displacement.z.slice(s).map(v=>v*1e6),borderWidth:1.2,pointRadius:0}];if(displacementChart)displacementChart.destroy();displacementChart=new Chart(document.getElementById("displacementChart"),{type:"line",data:{labels,datasets:sets},options:{responsive:true,maintainAspectRatio:false,animation:false,scales:{x:{title:{display:true,text:"Time (s)"}},y:{title:{display:true,text:"Filtered Displacement (µm)"}}}}});document.getElementById("dxPP").textContent=pp(d.displacement.x).toFixed(4)+" µm";document.getElementById("dyPP").textContent=pp(d.displacement.y).toFixed(4)+" µm";document.getElementById("dzPP").textContent=pp(d.displacement.z).toFixed(4)+" µm"}
-function updateFFT(){const d=prepareAnalysis();if(!d)return;const N=Number(document.getElementById("fftSize").value);const ax=fft(d.displacement.x,d.fs,N);const ay=fft(d.displacement.y,d.fs,N);const az=fft(d.displacement.z,d.fs,N);const start=Math.max(0,Math.ceil(d.fc/(d.fs/N)));const labels=ax.frequency.slice(start);const datasets=[{label:"X",data:ax.magnitude.slice(start),borderWidth:1.2,pointRadius:0},{label:"Y",data:ay.magnitude.slice(start),borderWidth:1.2,pointRadius:0},{label:"Z",data:az.magnitude.slice(start),borderWidth:1.2,pointRadius:0}];if(fftChart)fftChart.destroy();fftChart=new Chart(document.getElementById("fftChart"),{type:"line",data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,animation:false,scales:{x:{title:{display:true,text:"Frequency (Hz)"}},y:{title:{display:true,text:"Filtered Displacement Amplitude (m)"}}}}});document.getElementById("peakX").textContent=findPeak(ax,d.fc).toFixed(4)+" Hz";document.getElementById("peakY").textContent=findPeak(ay,d.fc).toFixed(4)+" Hz";document.getElementById("peakZ").textContent=findPeak(az,d.fc).toFixed(4)+" Hz";const px=ax.phase.slice(start),py=ay.phase.slice(start),pz=az.phase.slice(start);if(phaseChart)phaseChart.destroy();phaseChart=new Chart(document.getElementById("phaseChart"),{type:"line",data:{labels,datasets:[{label:"X",data:px,borderWidth:1.2,pointRadius:0},{label:"Y",data:py,borderWidth:1.2,pointRadius:0},{label:"Z",data:pz,borderWidth:1.2,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,animation:false,scales:{x:{title:{display:true,text:"Frequency (Hz)"}},y:{title:{display:true,text:"Phase (degrees)"}}}}})}
-function drawSTFT(){const d=prepareAnalysis();if(!d)return;const canvas=document.getElementById("stftCanvas");const rect=canvas.parentElement.getBoundingClientRect();const ratio=window.devicePixelRatio||1;canvas.width=Math.max(1,Math.floor(rect.width*ratio));canvas.height=Math.max(1,Math.floor(rect.height*ratio));canvas.style.width=rect.width+"px";canvas.style.height=rect.height+"px";const ctx=canvas.getContext("2d");ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,rect.width,rect.height);const N=Number(document.getElementById("stftWindow").value);let hop=Number(document.getElementById("stftHop").value);if(hop>=N)hop=Math.floor(N/2);if(hop<1)hop=1;const axis=document.getElementById("stftAxis").value;const signal=d.displacement[axis];if(!signal||signal.length<N){ctx.fillStyle="#9eb0c8";ctx.font="14px Arial";ctx.fillText("Not enough samples for STFT",20,30);return}const numFrames=Math.floor((signal.length-N)/hop)+1;const frames=[];for(let f=0;f<numFrames;f++){const start=f*hop;const segment=signal.slice(start,start+N);const r=new Float64Array(N);const im=new Float64Array(N);let mean=0;for(let i=0;i<N;i++)mean+=segment[i];mean/=N;let winSum=0;for(let i=0;i<N;i++){const w=0.5*(1-Math.cos(2*Math.PI*i/(N-1)));r[i]=(segment[i]-mean)*w;winSum+=w}const winMean=winSum/N;fftComplex(r,im);const mags=new Float64Array(N/2+1);const normFactor=2/(N*winMean);for(let k=0;k<=N/2;k++)mags[k]=normFactor*Math.sqrt(r[k]*r[k]+im[k]*im[k]);frames.push({start,time:(d.time[start]-d.time[0])/1000,magnitude:mags})}const maxFreq=d.fs/2;const minFreq=d.fc;const minBin=Math.max(0,Math.ceil(minFreq*N/d.fs));const maxBin=Math.floor(N/2);let maxMag=0;for(const frame of frames)for(let k=minBin;k<=maxBin;k++)if(frame.magnitude[k]>maxMag)maxMag=frame.magnitude[k];if(maxMag<=0)maxMag=1;const left=70,right=20,top=30,bottom=50,w=rect.width-left-right,h=rect.height-top-bottom;ctx.fillStyle="#080e18";ctx.fillRect(0,0,rect.width,rect.height);const frameW=w/frames.length;const binCount=maxBin-minBin+1;const binH=h/binCount;for(let x=0;x<frames.length;x++){const m=frames[x].magnitude;for(let k=minBin;k<=maxBin;k++){const value=Math.min(1,m[k]/maxMag);const yRatio=(k-minBin)/(binCount-1||1);const y=top+h-(yRatio*h)-binH;const q=Math.floor(255*Math.pow(value,0.5));ctx.fillStyle=`rgb(${q},${q},${q})`;ctx.fillRect(left+x*frameW,y,Math.ceil(frameW)+1,Math.ceil(binH)+1)}}ctx.strokeStyle="#52647c";ctx.lineWidth=1;ctx.strokeRect(left,top,w,h);ctx.fillStyle="#aebed2";ctx.font="12px Arial";ctx.fillText("STFT "+axis.toUpperCase()+" Filtered Displacement",left,18);ctx.fillText(minFreq.toFixed(2)+" Hz",5,top+h);ctx.fillText(maxFreq.toFixed(2)+" Hz",5,top+5);ctx.fillText("Time (s)",left+w/2-25,rect.height-12);for(let i=0;i<=5;i++){const yy=top+h-i*h/5;const f=minFreq+i*(maxFreq-minFreq)/5;ctx.fillText(f.toFixed(1)+" Hz",5,yy+4);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(left+w,yy);ctx.strokeStyle="rgba(150,170,190,0.15)";ctx.stroke()}for(let i=0;i<=5;i++){const xx=left+i*w/5;const t=frames[0].time+i*(frames[frames.length-1].time-frames[0].time)/5;ctx.fillText(t.toFixed(3),xx-12,top+h+18);ctx.beginPath();ctx.moveTo(xx,top);ctx.lineTo(xx,top+h);ctx.strokeStyle="rgba(150,170,190,0.15)";ctx.stroke()}}
-function rms(a){if(!a.length)return 0;let s=0;for(const v of a)s+=v*v;return Math.sqrt(s/a.length)*1000}
-function pp(a){if(!a.length)return 0;let mn=Infinity,mx=-Infinity;for(const v of a){if(v<mn)mn=v;if(v>mx)mx=v}return(mx-mn)*1e6}
-function analyze(){if(samples.length<32){setStatus("Not enough samples","warning");return}try{setStatus("Processing...");analysisCache=null;prepareAnalysis();updateTimeChart();updateVelocityChart();updateDisplacementChart();updateFFT();drawSTFT();setStatus("Analysis complete","success")}catch(e){console.error(e);setStatus("Analysis error: "+e.message,"error")}}
-function startTest(){if(testRunning)return;stopTest();testRunning=true;const fs=1000;let i=0;setStatus("Test signal running","success");testTimer=setInterval(()=>{if(!testRunning)return;const t=i*1000/fs;const x=.3*Math.sin(2*Math.PI*10*i/fs)+.08*Math.sin(2*Math.PI*2*i/fs);const y=.2*Math.sin(2*Math.PI*25*i/fs)+.05*Math.sin(2*Math.PI*1*i/fs);const z=.15*Math.sin(2*Math.PI*50*i/fs)+.04*Math.sin(2*Math.PI*3*i/fs);const sample={t,x,y,z};if(recording){recordingBuffer.push(sample);document.getElementById("recordedSamples").textContent=recordingBuffer.length}samples.push(sample);i++;analysisCache=null;if(samples.length%250===0)updateTimeChart()},1000/fs)}
+let serialPort=null,reader=null,serialBuffer="";
+let testTimer=null,testRunning=false;
+let timeChart=null,velocityChart=null,displacementChart=null;
+let fftChart=null,phaseChart=null;
+let recording=false,recordingBuffer=[],recordingTimer=null,recordingEndTime=0;
+function setStatus(t,type=""){const e=document.getElementById("status");e.textContent=t;e.className="status "+type}
+function num(id,def,min=-Infinity,max=Infinity){const v=Number(document.getElementById(id).value);return(Number.isFinite(v)&&v>=min&&v<=max)?v:def}
+function getConfiguredSampleRate(){return num("sampleRate",100,1,1e7)}
+function getCutoff(){return num("cutoffFreq",1,0.001,1e6)}
+function getBaudRate(){return num("baudRate",115200,300,1e7)}
+function getWinType(){return document.getElementById("winType").value}
+document.querySelectorAll(".tab").forEach(tab=>{tab.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));tab.classList.add("active");document.getElementById(tab.dataset.view).classList.add("active");setTimeout(()=>{const v=tab.dataset.view;if(v==="stftView")drawSTFT();else if(v==="fftView")updateFFTChart();else if(v==="phaseView")updatePhaseChart();else if(v==="timeView")updateTimeChart();else if(v==="velocityView")updateVelocityChart();else if(v==="displacementView")updateDisplacementChart();else if(v==="qualityView")updateQualityView()},30)})});
+function estimateSampleRate(){if(samples.length<5)return getConfiguredSampleRate();const d=[];for(let i=1;i<samples.length;i++){const dt=samples[i].t-samples[i-1].t;if(Number.isFinite(dt)&&dt>0&&dt<1e5)d.push(dt)}if(d.length<3)return getConfiguredSampleRate();d.sort((a,b)=>a-b);const median=d[Math.floor(d.length/2)];const devs=d.map(v=>Math.abs(v-median)).sort((a,b)=>a-b);const mad=devs[Math.floor(devs.length/2)]||0;const lo=median-3*mad,hi=median+3*mad;const filtered=mad>0?d.filter(v=>v>=lo&&v<=hi):d;const meanDt=filtered.reduce((s,v)=>s+v,0)/filtered.length;const fs=1000/meanDt;return(Number.isFinite(fs)&&fs>0)?fs:getConfiguredSampleRate()}
+async function connectSerial(){try{if(!("serial"in navigator)){setStatus("Web Serial not supported","error");return}if(serialPort)return;serialPort=await navigator.serial.requestPort();await serialPort.open({baudRate:getBaudRate()});setStatus("Port opened at "+getBaudRate()+" baud","success");readSerial()}catch(e){setStatus("Serial error: "+e.message,"error")}}
+async function readSerial(){if(!serialPort)return;try{while(serialPort.readable){reader=serialPort.readable.getReader();try{while(true){const{value,done}=await reader.read();if(done)break;if(value){serialBuffer+=new TextDecoder().decode(value,{stream:true});if(serialBuffer.length>SERIAL_BUFFER_MAX){serialBuffer=serialBuffer.slice(-SERIAL_BUFFER_MAX)}processSerialBuffer()}}}finally{reader.releaseLock();reader=null}}}catch(e){setStatus("Serial read error: "+e.message,"error")}}
+function processSerialBuffer(){const lines=serialBuffer.split(/\r?\n/);serialBuffer=lines.pop()||"";for(const line of lines)processLine(line.trim())}
+function processLine(line){if(!line)return;document.getElementById("serialOutput").textContent+=line+"\n";const tokens=line.split(/[,\s;]+/).filter(s=>s.length>0);const v=tokens.map(Number);for(let i=0;i<v.length;i++){if(!Number.isFinite(v[i]))return}if(v.length<3)return;let t,x,y,z;if(v.length>=4){t=v[0];x=v[1];y=v[2];z=v[3]}else{x=v[0];y=v[1];z=v[2];const fs=getConfiguredSampleRate();t=samples.length?samples[samples.length-1].t+1000/fs:0}const sample={t,x,y,z};if(recording&&recordingBuffer.length<RECORDING_MAX_SAMPLES){recordingBuffer.push(sample);document.getElementById("recordedSamples").textContent=recordingBuffer.length}samples.push(sample);analysisCache=null;if(samples.length%100===0)updateTimeChart()}
+async function disconnectSerial(){try{if(reader){try{await reader.cancel()}catch(e){}}if(serialPort)await serialPort.close()}catch(e){}reader=null;serialPort=null;setStatus("Disconnected")}
+async function sendSerialDataRaw(){const input=document.getElementById("sendDataInputRaw");const text=input.value;if(!text)return;if(!serialPort){setStatus("Serial not connected","error");return}try{const w=serialPort.writable.getWriter();await w.write(new TextEncoder().encode(text));w.releaseLock();document.getElementById("serialOutput").textContent+="[Sent] "+text+"\n";input.value=""}catch(e){setStatus("Send error: "+e.message,"error")}}
+class BiquadHP{constructor(fs,fc,Q){this.x1=0;this.x2=0;this.y1=0;this.y2=0;const w=TWO_PI*fc/fs;const c=Math.cos(w),s=Math.sin(w);const alpha=s/(2*Q);const a0=1+alpha;this.b0=((1+c)/2)/a0;this.b1=(-(1+c))/a0;this.b2=((1+c)/2)/a0;this.a1=(-2*c)/a0;this.a2=(1-alpha)/a0}process(x){const y=this.b0*x+this.b1*this.x1+this.b2*this.x2-this.a1*this.y1-this.a2*this.y2;this.x2=this.x1;this.x1=x;this.y2=this.y1;this.y1=y;return y}}
+function highPassFilter6(data,fs,fc){if(!data.length)return data.slice();if(fc<=0||fc>=fs/2)return data.slice();const f0=new BiquadHP(fs,fc,BW6_Q[0]);const f1=new BiquadHP(fs,fc,BW6_Q[1]);const f2=new BiquadHP(fs,fc,BW6_Q[2]);const out=new Array(data.length);for(let i=0;i<data.length;i++)out[i]=f2.process(f1.process(f0.process(data[i])));return out}
+function filtfilt(data,fs,fc){if(!data.length)return[];const fwd=highPassFilter6(data,fs,fc);const bwd=highPassFilter6(fwd.slice().reverse(),fs,fc);return bwd.reverse()}
+function fftComplex(r,i){const n=r.length;let j=0;for(let k=1;k<n;k++){let bit=n>>1;while(j&bit){j^=bit;bit>>=1}j^=bit;if(k<j){[r[k],r[j]]=[r[j],r[k]];[i[k],i[j]]=[i[j],i[k]]}}for(let len=2;len<=n;len<<=1){const a=-TWO_PI/len;const wr0=Math.cos(a),wi0=Math.sin(a);for(let start=0;start<n;start+=len){let wr=1,wi=0;for(let k=0;k<len/2;k++){const p=start+k,q=p+len/2;const vr=r[q]*wr-i[q]*wi;const vi=r[q]*wi+i[q]*wr;const ur=r[p],ui=i[p];r[p]=ur+vr;i[p]=ui+vi;r[q]=ur-vr;i[q]=ui-vi;const nwr=wr*wr0-wi*wi0;wi=wr*wi0+wi*wr0;wr=nwr}}}}
+function makeWindow(type,n){const w=new Float64Array(n);if(n<=1){w[0]=1;return w}if(type==="hann"){for(let i=0;i<n;i++)w[i]=0.5*(1-Math.cos(TWO_PI*i/(n-1)))}else if(type==="hamming"){for(let i=0;i<n;i++)w[i]=0.54-0.46*Math.cos(TWO_PI*i/(n-1))}else if(type==="blackman"){for(let i=0;i<n;i++)w[i]=0.42-0.5*Math.cos(TWO_PI*i/(n-1))+0.08*Math.cos(4*Math.PI*i/(n-1))}else if(type==="flattop"){const a0=0.21557895,a1=0.41663158,a2=0.277263158,a3=0.083578947,a4=0.006947368;for(let i=0;i<n;i++)w[i]=a0-a1*Math.cos(TWO_PI*i/(n-1))+a2*Math.cos(4*Math.PI*i/(n-1))-a3*Math.cos(6*Math.PI*i/(n-1))+a4*Math.cos(8*Math.PI*i/(n-1))}else{for(let i=0;i<n;i++)w[i]=0.5*(1-Math.cos(TWO_PI*i/(n-1)))}return w}
+function windowCoherentGain(w){let s=0;for(let i=0;i<w.length;i++)s+=w[i];return s/w.length}
+function linearDetrend(arr){const n=arr.length;const out=new Float64Array(n);if(n<2){for(let i=0;i<n;i++)out[i]=arr[i];return out}let sx=0,sy=0,sxx=0,sxy=0;for(let i=0;i<n;i++){sx+=i;sy+=arr[i];sxx+=i*i;sxy+=i*arr[i]}const denom=n*sxx-sx*sx;const slope=denom?((n*sxy-sx*sy)/denom):0;const intercept=(sy-slope*sx)/n;for(let i=0;i<n;i++)out[i]=arr[i]-(slope*i+intercept);return out}
+function quadraticPeakInterp(mag,k){if(k<=0||k>=mag.length-1)return{kPos:k,amp:mag[k]};const a=mag[k-1],b=mag[k],c=mag[k+1];const denom=a-2*b+c;if(Math.abs(denom)<1e-30)return{kPos:k,amp:b};const delta=0.5*(a-c)/denom;const kp=k+delta;const amp=b-0.25*(a-c)*delta;return{kPos:kp,amp:Math.abs(amp)}}
+function fftSpectrum(signal,fs,N,winType){const M=Math.min(signal.length,N);const win=makeWindow(winType,M);const cg=windowCoherentGain(win);const det=linearDetrend(signal.slice(0,M));const r=new Float64Array(N),im=new Float64Array(N);for(let i=0;i<M;i++)r[i]=det[i]*win[i];fftComplex(r,im);const half=N/2;const freq=new Float64Array(half+1);const mag=new Float64Array(half+1);const phase=new Float64Array(half+1);const norm=2/(M*cg);for(let k=0;k<=half;k++){freq[k]=k*fs/N;const re=r[k],ie=im[k];mag[k]=norm*Math.hypot(re,ie);phase[k]=Math.atan2(ie,re)*180/Math.PI}return{frequency:freq,magnitude:mag,phase:phase,N:N,fs:fs,winType:winType,winCG:cg}}
+function integrateFFT(signal,fs,fc){const n=signal.length;if(n<4)return new Float64Array(n);const det=linearDetrend(signal);let N=256;while(N<4*n)N<<=1;const re=new Float64Array(N),im=new Float64Array(N);for(let i=0;i<n;i++)re[i]=det[i];fftComplex(re,im);const half=N/2;const df=fs/N;const fLo=0.7*fc,fHi=1.5*fc;const span=Math.max(fHi-fLo,1e-12);for(let k=0;k<=half;k++){const f=k*df;let mask;if(f<=fLo)mask=0;else if(f>=fHi)mask=1;else{const u=(f-fLo)/span;mask=0.5*(1-Math.cos(Math.PI*u))}const w=TWO_PI*f;let vr,vi;if(w<1e-12){vr=0;vi=0}else{vr=im[k]/w;vi=-re[k]/w}re[k]=vr*mask;im[k]=vi*mask;if(k>0&&k<half){re[N-k]=re[k];im[N-k]=-im[k]}}re[0]=0;im[0]=0;if(N%2===0){re[half]=0;im[half]=0}for(let k=0;k<N;k++)im[k]=-im[k];fftComplex(re,im);for(let k=0;k<N;k++)im[k]=-im[k];const out=new Float64Array(n);const inv=1/N;for(let i=0;i<n;i++)out[i]=re[i]*inv;return out}
+function rms(a,scale=1){if(!a||!a.length)return 0;let s=0;for(let i=0;i<a.length;i++)s+=a[i]*a[i];return Math.sqrt(s/a.length)*scale}
+function mean(a){if(!a||!a.length)return 0;let s=0;for(let i=0;i<a.length;i++)s+=a[i];return s/a.length}
+function peakToPeak(a,scale=1){if(!a||!a.length)return 0;let mn=Infinity,mx=-Infinity;for(let i=0;i<a.length;i++){const v=a[i];if(v<mn)mn=v;if(v>mx)mx=v}return(mx-mn)*scale}
+function stddev(a){if(!a||a.length<2)return 0;const m=mean(a);let s=0;for(let i=0;i<a.length;i++){const d=a[i]-m;s+=d*d}return Math.sqrt(s/(a.length-1))}
+function estimateSNR(sig){const N=4096;const M=Math.min(sig.length,N);if(M<128)return 0;const win=makeWindow("hann",M);const cg=windowCoherentGain(win);const r=new Float64Array(N),im=new Float64Array(N);const m=mean(sig);for(let i=0;i<M;i++)r[i]=(sig[i]-m)*win[i];fftComplex(r,im);const half=N/2;const mag=new Float64Array(half);for(let k=1;k<half;k++)mag[k]=Math.hypot(r[k],im[k])/(M*cg);const sorted=Array.from(mag.slice(1)).sort((a,b)=>a-b);const median=sorted[Math.floor(sorted.length*0.5)]||1e-30;const p90=sorted[Math.floor(sorted.length*0.90)]||1e-30;const peakThreshold=Math.max(median*20,p90);let signalPow=0;let noiseSum=0,noiseCount=0;for(let k=1;k<half;k++){if(mag[k]>=peakThreshold){signalPow+=mag[k]*mag[k]}else{noiseSum+=mag[k]*mag[k];noiseCount++}}if(noiseCount<10)return 80;const noiseRms=Math.sqrt(noiseSum/noiseCount);const signalRms=Math.sqrt(signalPow);if(noiseRms<=1e-30)return 80;const snr=20*Math.log10(signalRms/noiseRms);return Math.max(0,Math.min(80,snr))}
+function prepareAnalysis(){if(analysisCache)return analysisCache;if(samples.length<16)return null;const fs=estimateSampleRate();const fc=Math.max(0.001,Math.min(getCutoff(),fs*0.45));const n=samples.length;const time=new Float64Array(n);const ax=new Array(n),ay=new Array(n),az=new Array(n);for(let i=0;i<n;i++){const s=samples[i];time[i]=s.t;ax[i]=s.x*G;ay[i]=s.y*G;az[i]=s.z*G}const minLen=Math.max(32,Math.ceil(MIN_FILTFILT_SAMPLES_FACTOR*fs/fc));const filtOK=n>=minLen;const axF=filtOK?filtfilt(ax,fs,fc):ax.slice();const ayF=filtOK?filtfilt(ay,fs,fc):ay.slice();const azF=filtOK?filtfilt(az,fs,fc):az.slice();const vx=integrateFFT(axF,fs,fc);const vy=integrateFFT(ayF,fs,fc);const vz=integrateFFT(azF,fs,fc);const dx=integrateFFT(vx,fs,fc);const dy=integrateFFT(vy,fs,fc);const dz=integrateFFT(vz,fs,fc);analysisCache={fs,fc,time,minLen,filtOK,acceleration:{x:axF,y:ayF,z:azF},velocity:{x:vx,y:vy,z:vz},displacement:{x:dx,y:dy,z:dz}};return analysisCache}
+function baseTimeChartOpts(yTitle){return{responsive:true,maintainAspectRatio:false,animation:false,interaction:{mode:"nearest",intersect:false},elements:{line:{borderJoinStyle:"round"},point:{radius:0}},scales:{x:{title:{display:true,text:"Time (s)",color:"#c8d6ea"},ticks:{color:"#aebed2",maxTicksLimit:12},grid:{color:"rgba(150,170,190,0.10)"}},y:{title:{display:true,text:yTitle,color:"#c8d6ea"},ticks:{color:"#aebed2"},grid:{color:"rgba(150,170,190,0.10)"}}},plugins:{legend:{labels:{color:"#c8d6ea"}}}}}
+function destroyChart(c){if(c&&typeof c.destroy==="function")c.destroy()}
+function makeSeries(arr,startIdx,scale){const len=arr.length-startIdx;const data=new Array(len);for(let i=0;i<len;i++)data[i]=arr[startIdx+i]*scale;return data}
+function makeTimeLabels(time,startIdx,t0){const len=time.length-startIdx;const labels=new Array(len);for(let i=0;i<len;i++)labels[i]=(time[startIdx+i]-t0)/1000;return labels}
+function updateTimeChart(){const d=prepareAnalysis();if(!d){setStatus("Need ≥16 samples","warning");return}const len=d.time.length;const start=Math.max(0,len-PLOT_POINTS_MAX);const labels=makeTimeLabels(d.time,start,d.time[0]);const sets=[{label:"X",data:makeSeries(d.acceleration.x,start,1/G),borderWidth:1.4,pointRadius:0,borderColor:"#e17e7e",tension:0},{label:"Y",data:makeSeries(d.acceleration.y,start,1/G),borderWidth:1.4,pointRadius:0,borderColor:"#7bcf9b",tension:0},{label:"Z",data:makeSeries(d.acceleration.z,start,1/G),borderWidth:1.4,pointRadius:0,borderColor:"#6db3f2",tension:0}];destroyChart(timeChart);timeChart=new Chart(document.getElementById("timeChart"),{type:"line",data:{labels,datasets:sets},options:baseTimeChartOpts("Acceleration (g)")});document.getElementById("sampleCount").textContent=samples.length;document.getElementById("detectedFs").textContent=d.fs.toFixed(4)+" Hz";document.getElementById("displayCutoff").textContent=d.fc.toFixed(3)+" Hz";document.getElementById("duration").textContent=((d.time[len-1]-d.time[0])/1000).toFixed(3)+" s";const cfg=getConfiguredSampleRate();const err=cfg>0?Math.abs(d.fs-cfg)/cfg*100:0;document.getElementById("fsError").textContent=err.toFixed(3)+" %";const nyq=d.fs/2;document.getElementById("aliasRisk").textContent=nyq<10?"High":"Low (Nyq="+nyq.toFixed(1)+" Hz)"}
+function updateVelocityChart(){const d=prepareAnalysis();if(!d)return;const start=Math.max(0,d.time.length-PLOT_POINTS_MAX);const labels=makeTimeLabels(d.time,start,d.time[0]);const sets=[{label:"X",data:makeSeries(d.velocity.x,start,1000),borderWidth:1.4,pointRadius:0,borderColor:"#e17e7e",tension:0},{label:"Y",data:makeSeries(d.velocity.y,start,1000),borderWidth:1.4,pointRadius:0,borderColor:"#7bcf9b",tension:0},{label:"Z",data:makeSeries(d.velocity.z,start,1000),borderWidth:1.4,pointRadius:0,borderColor:"#6db3f2",tension:0}];destroyChart(velocityChart);velocityChart=new Chart(document.getElementById("velocityChart"),{type:"line",data:{labels,datasets:sets},options:baseTimeChartOpts("Velocity (mm/s)")});document.getElementById("vxRms").textContent=rms(d.velocity.x,1000).toFixed(4)+" mm/s";document.getElementById("vyRms").textContent=rms(d.velocity.y,1000).toFixed(4)+" mm/s";document.getElementById("vzRms").textContent=rms(d.velocity.z,1000).toFixed(4)+" mm/s"}
+function updateDisplacementChart(){const d=prepareAnalysis();if(!d)return;const start=Math.max(0,d.time.length-PLOT_POINTS_MAX);const labels=makeTimeLabels(d.time,start,d.time[0]);const sets=[{label:"X",data:makeSeries(d.displacement.x,start,1e6),borderWidth:1.4,pointRadius:0,borderColor:"#e17e7e",tension:0},{label:"Y",data:makeSeries(d.displacement.y,start,1e6),borderWidth:1.4,pointRadius:0,borderColor:"#7bcf9b",tension:0},{label:"Z",data:makeSeries(d.displacement.z,start,1e6),borderWidth:1.4,pointRadius:0,borderColor:"#6db3f2",tension:0}];destroyChart(displacementChart);displacementChart=new Chart(document.getElementById("displacementChart"),{type:"line",data:{labels,datasets:sets},options:baseTimeChartOpts("Displacement (µm)")});document.getElementById("dxPP").textContent=peakToPeak(d.displacement.x,1e6).toFixed(4)+" µm";document.getElementById("dyPP").textContent=peakToPeak(d.displacement.y,1e6).toFixed(4)+" µm";document.getElementById("dzPP").textContent=peakToPeak(d.displacement.z,1e6).toFixed(4)+" µm"}
+function findPeakInterp(spec,fc){const freq=spec.frequency;const mag=spec.magnitude;let maxV=-Infinity,idx=-1;for(let k=0;k<freq.length;k++){if(freq[k]>=fc&&mag[k]>maxV){maxV=mag[k];idx=k}}if(idx<0)return{freq:0,amp:0};const r=quadraticPeakInterp(mag,idx);const df=freq.length>1?freq[1]-freq[0]:0;const fPeak=r.kPos*df;return{freq:fPeak,amp:r.amp}}
+function updateFFTChart(){const d=prepareAnalysis();if(!d)return;const N=num("fftSize",1024,64,1<<16);const wt=getWinType();const axis=document.getElementById("fftAxis").value;const src=document.getElementById("fftSource").value;const sig=src==="acceleration"?d.acceleration[axis]:src==="velocity"?d.velocity[axis]:d.displacement[axis];const unitLabel=src==="acceleration"?"Acceleration (g)":src==="velocity"?"Velocity (mm/s)":"Displacement (µm)";const unitScale=src==="acceleration"?(1/G):src==="velocity"?1000:1e6;const spec=fftSpectrum(sig,d.fs,N,wt);let start=0;while(start<spec.frequency.length&&spec.frequency[start]<d.fc)start++;const labels=[],dataY=[];for(let k=start;k<spec.frequency.length;k++){labels.push(+spec.frequency[k].toFixed(4));dataY.push(spec.magnitude[k]*unitScale)}const color=axis==="x"?"#e17e7e":axis==="y"?"#7bcf9b":"#6db3f2";destroyChart(fftChart);fftChart=new Chart(document.getElementById("fftChart"),{type:"line",data:{labels,datasets:[{label:axis.toUpperCase()+" · "+src,data:dataY,borderWidth:1.4,pointRadius:0,borderColor:color}]},options:{responsive:true,maintainAspectRatio:false,animation:false,scales:{x:{title:{display:true,text:"Frequency (Hz)",color:"#c8d6ea"},ticks:{color:"#aebed2"}},y:{title:{display:true,text:unitLabel,color:"#c8d6ea"},ticks:{color:"#aebed2"}}},plugins:{legend:{labels:{color:"#c8d6ea"}}}}});const p=findPeakInterp(spec,d.fc);const pAmp=p.amp*unitScale;document.getElementById("peakX").textContent=p.freq.toFixed(4)+" Hz";document.getElementById("peakY").textContent=pAmp.toFixed(4)+" "+unitLabel.match(/\(([^)]+)\)/)[1];const order=p.freq>0?(p.freq/(d.fs/Math.max(1,Math.round(d.fs/(2*Math.PI))))):0;document.getElementById("peakZ").textContent=p.freq.toFixed(3)+" Hz → bin "+Math.round(p.freq/(d.fs/N))}
+function updatePhaseChart(){const d=prepareAnalysis();if(!d)return;const N=num("fftSize",1024,64,1<<16);const wt=getWinType();const ax=fftSpectrum(d.displacement.x,d.fs,N,wt);const ay=fftSpectrum(d.displacement.y,d.fs,N,wt);const az=fftSpectrum(d.displacement.z,d.fs,N,wt);let start=0;while(start<ax.frequency.length&&ax.frequency[start]<d.fc)start++;const labels=[],pX=[],pY=[],pZ=[];for(let k=start;k<ax.frequency.length;k++){labels.push(+ax.frequency[k].toFixed(4));pX.push(ax.phase[k]);pY.push(ay.phase[k]);pZ.push(az.phase[k])}destroyChart(phaseChart);phaseChart=new Chart(document.getElementById("phaseChart"),{type:"line",data:{labels,datasets:[{label:"X",data:pX,borderWidth:1.2,pointRadius:0,borderColor:"#e17e7e"},{label:"Y",data:pY,borderWidth:1.2,pointRadius:0,borderColor:"#7bcf9b"},{label:"Z",data:pZ,borderWidth:1.2,pointRadius:0,borderColor:"#6db3f2"}]},options:{responsive:true,maintainAspectRatio:false,animation:false,scales:{x:{title:{display:true,text:"Frequency (Hz)",color:"#c8d6ea"},ticks:{color:"#aebed2"}},y:{title:{display:true,text:"Phase (°)",color:"#c8d6ea"},ticks:{color:"#aebed2"},min:-180,max:180}},plugins:{legend:{labels:{color:"#c8d6ea"}}}}})}
+const COLORMAPS={viridis:t=>{t=Math.max(0,Math.min(1,t));const R=Math.round(255*(0.267+0.105*t+0.778*t*t-1.150*t*t*t));const Gc=Math.round(255*(0.005+1.404*t-0.877*t*t+0.151*t*t*t));const B=Math.round(255*(0.329+0.559*t+0.347*t*t-0.235*t*t*t));return[clamp255(R),clamp255(Gc),clamp255(B)]},inferno:t=>{t=Math.max(0,Math.min(1,t));const R=Math.round(255*(3.75*t*t-2.75*t*t*t));const Gc=Math.round(255*(0.270*t*t+0.440*t*t*t));const B=Math.round(255*(0.014+1.160*t-2.160*t*t+1.000*t*t*t));return[clamp255(R),clamp255(Gc),clamp255(B)]},gray:t=>{const q=clamp255(Math.round(255*Math.max(0,Math.min(1,t))));return[q,q,q]}};
+function clamp255(x){return x<0?0:x>255?255:x}
+function computeSTFT(signal,N,hop,wt){const numFrames=Math.floor((signal.length-N)/hop)+1;if(numFrames<=0)return null;const half=N/2;const win=makeWindow(wt,N);const cg=windowCoherentGain(win);const norm=2/(N*cg);const frames=[];let globalMax=0;for(let f=0;f<numFrames;f++){const start=f*hop;const r=new Float64Array(N),im=new Float64Array(N);let m=0;for(let i=0;i<N;i++)m+=signal[start+i];m/=N;for(let i=0;i<N;i++)r[i]=(signal[start+i]-m)*win[i];fftComplex(r,im);const mag=new Float64Array(half+1);for(let k=0;k<=half;k++){const v=norm*Math.hypot(r[k],im[k]);mag[k]=v;if(v>globalMax)globalMax=v}frames.push({start,mag})}if(globalMax<=0)globalMax=1e-30;return{frames,half,globalMax,N,hop}}
+function drawSTFT(){const d=prepareAnalysis();if(!d)return;const canvas=document.getElementById("stftCanvas");const rect=canvas.parentElement.getBoundingClientRect();const ratio=window.devicePixelRatio||1;const W=Math.max(1,Math.floor(rect.width*ratio));const H=Math.max(1,Math.floor(rect.height*ratio));if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H}canvas.style.width=rect.width+"px";canvas.style.height=rect.height+"px";const ctx=canvas.getContext("2d");ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,rect.width,rect.height);const N=num("stftWindow",256,16,4096);let hop=num("stftHop",64,1,4096);if(hop>=N)hop=Math.floor(N/2);if(hop<1)hop=1;const axis=document.getElementById("stftAxis").value;const src=document.getElementById("stftSource").value;const cmapName=document.getElementById("stftCmap").value;const cmap=COLORMAPS[cmapName]||COLORMAPS.viridis;const dbRange=num("stftDbRange",60,10,120);const wt=getWinType();const signal=src==="displacement"?d.displacement[axis]:src==="velocity"?d.velocity[axis]:d.acceleration[axis];if(!signal||signal.length<N){ctx.fillStyle="#9eb0c8";ctx.font="14px Arial";ctx.fillText("Not enough samples for STFT (need "+N+")",20,30);return}const stft=computeSTFT(signal,N,hop,wt);if(!stft)return;const{frames,half,globalMax}=stft;const minFreq=d.fc;const maxFreq=d.fs/2;const minBin=Math.max(0,Math.ceil(minFreq*N/d.fs));const maxBin=half;const binCount=maxBin-minBin+1;const left=70,right=20,top=30,bottom=50;const w=rect.width-left-right;const h=rect.height-top-bottom;ctx.fillStyle="#080e18";ctx.fillRect(0,0,rect.width,rect.height);const plotW=Math.max(1,Math.floor(w));const plotH=Math.max(1,Math.floor(h));const img=ctx.createImageData(plotW,plotH);const data=img.data;const dbFloor=-dbRange;const LUT=new Uint8ClampedArray(256*3);for(let i=0;i<256;i++){const[R,Gc,B]=cmap(i/255);LUT[i*3]=R;LUT[i*3+1]=Gc;LUT[i*3+2]=B}const numFrames=frames.length;for(let py=0;py<plotH;py++){const binRatio=1-py/(plotH-1||1);const k=minBin+Math.round(binRatio*(binCount-1));for(let px=0;px<plotW;px++){const fx=Math.min(numFrames-1,Math.floor(px*numFrames/plotW));const v=frames[fx].mag[k]/globalMax;const dB=v>0?20*Math.log10(v):dbFloor;let t=(dB-dbFloor)/(-dbFloor);if(t<0)t=0;if(t>1)t=1;const li=(t*255)|0;const o=(py*plotW+px)*4;data[o]=LUT[li*3];data[o+1]=LUT[li*3+1];data[o+2]=LUT[li*3+2];data[o+3]=255}}ctx.putImageData(img,left,top);ctx.strokeStyle="#52647c";ctx.lineWidth=1;ctx.strokeRect(left,top,w,h);ctx.fillStyle="#aebed2";ctx.font="12px Arial";ctx.fillText("STFT · "+src+" · "+axis.toUpperCase()+" · "+wt+" · "+dbRange+" dB range",left,18);for(let i=0;i<=5;i++){const yy=top+h-i*h/5;const f=minFreq+i*(maxFreq-minFreq)/5;ctx.fillStyle="#aebed2";ctx.fillText(f.toFixed(2)+" Hz",5,yy+4);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(left+w,yy);ctx.strokeStyle="rgba(150,170,190,0.15)";ctx.stroke()}if(frames.length>0){const t0=(d.time[frames[0].start]-d.time[0])/1000;const tN=(d.time[frames[frames.length-1].start]-d.time[0])/1000;for(let i=0;i<=5;i++){const xx=left+i*w/5;const t=t0+i*(tN-t0)/5;ctx.fillStyle="#aebed2";ctx.fillText(t.toFixed(3),xx-12,top+h+18);ctx.beginPath();ctx.moveTo(xx,top);ctx.lineTo(xx,top+h);ctx.strokeStyle="rgba(150,170,190,0.15)";ctx.stroke()}}}
+function updateQualityView(){if(samples.length<10){document.getElementById("qualityLog").textContent="Need ≥10 samples.";return}const fs=estimateSampleRate();const cfg=getConfiguredSampleRate();const err=cfg>0?Math.abs(fs-cfg)/cfg*100:0;const intervals=[];for(let i=1;i<samples.length;i++){const dt=samples[i].t-samples[i-1].t;if(dt>0)intervals.push(dt)}const meanDt=intervals.length?intervals.reduce((s,v)=>s+v,0)/intervals.length:0;const stdDt=stddev(intervals);const jitter=meanDt>0?stdDt/meanDt*100:0;let missing=0;const med=intervals.length?intervals.slice().sort((a,b)=>a-b)[Math.floor(intervals.length/2)]:0;for(const dt of intervals){if(med>0&&dt>1.5*med)missing++}const ax=samples.map(s=>s.x);const ay=samples.map(s=>s.y);const az=samples.map(s=>s.z);const axD=linearDetrend(ax);const ayD=linearDetrend(ay);const azD=linearDetrend(az);const dcX=mean(axD);const dcY=mean(ayD);const dcZ=mean(azD);let clipX=0,clipY=0,clipZ=0;const CLIP=16;for(let i=0;i<ax.length;i++){if(Math.abs(ax[i])>=CLIP)clipX++;if(Math.abs(ay[i])>=CLIP)clipY++;if(Math.abs(az[i])>=CLIP)clipZ++}const clipPctX=ax.length?clipX/ax.length*100:0;const clipPctY=ay.length?clipY/ay.length*100:0;const clipPctZ=az.length?clipZ/az.length*100:0;const snrX=estimateSNR(ax);const snrY=estimateSNR(ay);const snrZ=estimateSNR(az);const nyq=fs/2;const oversample=med>0?(1/(med/1000))/fs:0;const d=prepareAnalysis();const minLen=d?d.minLen:0;const filtOK=d?d.filtOK:false;document.getElementById("qFs").textContent=fs.toFixed(4)+" Hz";document.getElementById("qJitter").textContent=jitter.toFixed(3)+" %";document.getElementById("qMissing").textContent=missing;document.getElementById("qDcX").textContent=dcX.toFixed(6)+" g";document.getElementById("qDcY").textContent=dcY.toFixed(6)+" g";document.getElementById("qDcZ").textContent=dcZ.toFixed(6)+" g";document.getElementById("qClipX").textContent=clipPctX.toFixed(3)+" %";document.getElementById("qClipY").textContent=clipPctY.toFixed(3)+" %";document.getElementById("qClipZ").textContent=clipPctZ.toFixed(3)+" %";document.getElementById("qSnrX").textContent=snrX.toFixed(2)+" dB";document.getElementById("qSnrY").textContent=snrY.toFixed(2)+" dB";document.getElementById("qSnrZ").textContent=snrZ.toFixed(2)+" dB";document.getElementById("qNyq").textContent=nyq.toFixed(3)+" Hz";document.getElementById("qOversample").textContent=oversample>0?oversample.toFixed(2):"—";document.getElementById("qMinLen").textContent=filtOK?"OK ("+samples.length+" ≥ "+minLen+")":"FAIL ("+samples.length+" < "+minLen+")";let score=100;if(err>0.5)score-=Math.min(10,err);if(jitter>1)score-=Math.min(10,jitter*2);if(missing>0)score-=Math.min(5,missing*0.5);if(Math.max(clipPctX,clipPctY,clipPctZ)>0.01)score-=5;const minSnr=Math.min(snrX,snrY,snrZ);if(minSnr<20)score-=Math.min(10,20-minSnr);if(!filtOK)score-=10;score=Math.max(0,score);document.getElementById("qScore").textContent=score.toFixed(1)+" / 100";const report=[];report.push("=== SIGNAL QUALITY REPORT ===");report.push("Samples: "+samples.length);report.push("Configured fs: "+cfg+" Hz");report.push("Measured fs: "+fs.toFixed(4)+" Hz");report.push("FS Error: "+err.toFixed(4)+" % "+(err<0.5?"[OK]":"[WARN]"));report.push("Jitter (std/mean): "+jitter.toFixed(3)+" % "+(jitter<1?"[OK]":jitter<5?"[WARN]":"[FAIL]"));report.push("Missing packets (dt>1.5×median): "+missing+" "+(missing===0?"[OK]":"[WARN]"));report.push("");report.push("DC Offset (post-detrend) X/Y/Z: "+dcX.toFixed(6)+" / "+dcY.toFixed(6)+" / "+dcZ.toFixed(6)+" g");report.push("Clipping (|x|>=16g) X/Y/Z: "+clipPctX.toFixed(3)+" / "+clipPctY.toFixed(3)+" / "+clipPctZ.toFixed(3)+" % "+(Math.max(clipPctX,clipPctY,clipPctZ)<0.01?"[OK]":"[WARN]"));report.push("SNR (peak-vs-floor) X/Y/Z: "+snrX.toFixed(2)+" / "+snrY.toFixed(2)+" / "+snrZ.toFixed(2)+" dB "+(minSnr>=30?"[OK]":minSnr>=20?"[WARN]":"[FAIL]"));report.push("Nyquist: "+nyq.toFixed(3)+" Hz");report.push("Oversample factor: "+oversample.toFixed(2));report.push("");report.push("Filter length requirement: "+minLen+" samples "+(filtOK?"[OK]":"[FAIL — filtfilt disabled]"));report.push("");report.push("=== ACCURACY ESTIMATE ===");report.push("Estimated accuracy score: "+score.toFixed(1)+" / 100");report.push("");report.push("Recommendation:");if(score>=95)report.push("  ✓ Data quality is excellent for industrial vibration analysis.");else if(score>=85)report.push("  ✓ Data quality is good. Minor improvements possible.");else if(score>=70)report.push("  ⚠ Data quality is acceptable. Check SNR and jitter.");else report.push("  ✗ Data quality is insufficient. Investigate sensor, wiring, and sample rate.");document.getElementById("qualityLog").textContent=report.join("\n")}
+function analyze(){if(samples.length<16){setStatus("Not enough samples (need ≥16)","warning");return}try{setStatus("Processing...");analysisCache=null;prepareAnalysis();updateTimeChart();updateVelocityChart();updateDisplacementChart();const active=document.querySelector(".tab.active");if(active){const v=active.dataset.view;if(v==="fftView")updateFFTChart();else if(v==="phaseView")updatePhaseChart();else if(v==="stftView")drawSTFT();else if(v==="qualityView")updateQualityView()}setStatus("Analysis complete — "+samples.length+" samples","success")}catch(e){console.error(e);setStatus("Analysis error: "+e.message,"error")}}
+function startTest(){if(testRunning)return;stopTest();testRunning=true;const fs=getConfiguredSampleRate();setStatus("Test signal running...","success");const preloadSamples=Math.floor(fs*10);for(let k=0;k<preloadSamples;k++){const t=k*1000/fs;const x=0.30*Math.sin(TWO_PI*10*k/fs)+0.08*Math.sin(TWO_PI*2*k/fs)+0.02*Math.sin(TWO_PI*30*k/fs);const y=0.20*Math.sin(TWO_PI*25*k/fs)+0.05*Math.sin(TWO_PI*1*k/fs)+0.02*Math.sin(TWO_PI*45*k/fs);const z=0.15*Math.sin(TWO_PI*50*k/fs)+0.04*Math.sin(TWO_PI*3*k/fs)+0.02*Math.sin(TWO_PI*15*k/fs);samples.push({t,x,y,z})}let i=preloadSamples;analysisCache=null;updateTimeChart();setStatus("Demo: "+samples.length+" samples loaded — press Analyze for all views","success");testTimer=setInterval(()=>{if(!testRunning)return;const t=i*1000/fs;const x=0.30*Math.sin(TWO_PI*10*i/fs)+0.08*Math.sin(TWO_PI*2*i/fs)+0.02*Math.sin(TWO_PI*30*i/fs);const y=0.20*Math.sin(TWO_PI*25*i/fs)+0.05*Math.sin(TWO_PI*1*i/fs)+0.02*Math.sin(TWO_PI*45*i/fs);const z=0.15*Math.sin(TWO_PI*50*i/fs)+0.04*Math.sin(TWO_PI*3*i/fs)+0.02*Math.sin(TWO_PI*15*i/fs);const sample={t,x,y,z};if(recording&&recordingBuffer.length<RECORDING_MAX_SAMPLES){recordingBuffer.push(sample);document.getElementById("recordedSamples").textContent=recordingBuffer.length}samples.push(sample);i++;analysisCache=null;if(samples.length%250===0)updateTimeChart()},1000/fs)}
 function stopTest(){testRunning=false;if(testTimer){clearInterval(testTimer);testTimer=null}}
-function clearData(){stopTest();samples=[];filtered={x:[],y:[],z:[]};filteredVelocity={x:[],y:[],z:[]};filteredDisplacement={x:[],y:[],z:[]};velocity={x:[],y:[],z:[]};displacement={x:[],y:[],z:[]};analysisCache=null;document.getElementById("serialOutput").textContent="";[timeChart,velocityChart,displacementChart,fftChart,phaseChart].forEach(c=>{if(c)c.destroy()});timeChart=null;velocityChart=null;displacementChart=null;fftChart=null;phaseChart=null;const c=document.getElementById("stftCanvas");const ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);document.getElementById("sampleCount").textContent="0";document.getElementById("detectedFs").textContent="0 Hz";document.getElementById("displayCutoff").textContent="0 Hz";document.getElementById("duration").textContent="0 s";document.getElementById("peakX").textContent="0 Hz";document.getElementById("peakY").textContent="0 Hz";document.getElementById("peakZ").textContent="0 Hz";setStatus("Data cleared")}
-function startRecording(){if(recording)return;const duration=Number(document.getElementById("recordDuration").value);recording=true;recordingBuffer=[];document.getElementById("recordedSamples").textContent="0";document.getElementById("recordStatus").textContent="Recording...";document.getElementById("recordStatus").className="status warning";recordingEndTime=Date.now()+duration*1000;let remaining=duration;document.getElementById("recordTimeLeft").textContent=remaining+" s";recordingTimer=setInterval(()=>{const left=Math.max(0,Math.ceil((recordingEndTime-Date.now())/1000));document.getElementById("recordTimeLeft").textContent=left+" s";if(Date.now()>=recordingEndTime){stopRecording()}},200)}
+function clearData(){stopTest();samples=[];analysisCache=null;document.getElementById("serialOutput").textContent="";[timeChart,velocityChart,displacementChart,fftChart,phaseChart].forEach(destroyChart);timeChart=velocityChart=displacementChart=fftChart=phaseChart=null;const c=document.getElementById("stftCanvas");const ctx=c.getContext("2d");ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,c.width,c.height);["sampleCount","peakX","peakY","peakZ","vxRms","vyRms","vzRms","dxPP","dyPP","dzPP"].forEach(id=>document.getElementById(id).textContent="0");document.getElementById("detectedFs").textContent="0 Hz";document.getElementById("displayCutoff").textContent="0 Hz";document.getElementById("duration").textContent="0 s";document.getElementById("fsError").textContent="0 %";document.getElementById("aliasRisk").textContent="—";["qFs","qJitter","qMissing","qDcX","qDcY","qDcZ","qClipX","qClipY","qClipZ","qSnrX","qSnrY","qSnrZ","qNyq","qOversample","qMinLen","qScore"].forEach(id=>document.getElementById(id).textContent="—");document.getElementById("qualityLog").textContent="Run Analyze to populate quality report.";setStatus("Data cleared")}
+function startRecording(){if(recording)return;const duration=num("recordDuration",2,0.1,600);recording=true;recordingBuffer=[];document.getElementById("recordedSamples").textContent="0";document.getElementById("recordStatus").textContent="Recording...";document.getElementById("recordStatus").className="status warning";recordingEndTime=Date.now()+duration*1000;document.getElementById("recordTimeLeft").textContent=duration+" s";recordingTimer=setInterval(()=>{const left=Math.max(0,Math.ceil((recordingEndTime-Date.now())/1000));document.getElementById("recordTimeLeft").textContent=left+" s";if(Date.now()>=recordingEndTime)stopRecording()},200)}
 function stopRecording(){if(!recording)return;recording=false;if(recordingTimer){clearInterval(recordingTimer);recordingTimer=null}document.getElementById("recordStatus").textContent="Recording complete. "+recordingBuffer.length+" samples captured.";document.getElementById("recordStatus").className="status success";document.getElementById("recordTimeLeft").textContent="0 s"}
-function downloadRecording(){if(recordingBuffer.length===0){document.getElementById("recordStatus").textContent="No recorded data. Start recording first.";document.getElementById("recordStatus").className="status warning";return}stopRecording();samples=recordingBuffer.slice();analysisCache=null;try{setStatus("Processing...");prepareAnalysis();updateTimeChart();updateVelocityChart();updateDisplacementChart();updateFFT();drawSTFT();document.getElementById("recordStatus").textContent="Downloaded and analyzed "+samples.length+" samples.";document.getElementById("recordStatus").className="status success";setStatus("Analysis complete","success")}catch(e){console.error(e);setStatus("Analysis error: "+e.message,"error")}const csvLines=["t,x,y,z"];for(const s of samples){csvLines.push(s.t+","+s.x+","+s.y+","+s.z)}const blob=new Blob([csvLines.join("\n")],{type:"text/csv"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="titan_sense_recording.csv";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url)}
-function exportData(){
-  if(samples.length===0){
-    setStatus("No data to export","warning");
-    return;
-  }
-  const dataStr=JSON.stringify(samples);
-  const blob=new Blob([dataStr],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;
-  const timestamp=new Date().toISOString().replace(/[:.]/g,"-");
-  a.download="titan_sense_data_"+timestamp+".json";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  setStatus("Data exported ("+samples.length+" samples)","success");
-}
-function importData(){
-  const input=document.createElement("input");
-  input.type="file";
-  input.accept=".json,application/json";
-  input.onchange=function(e){
-    const file=e.target.files[0];
-    if(!file)return;
-    const reader=new FileReader();
-    reader.onload=function(evt){
-      try{
-        const imported=JSON.parse(evt.target.result);
-        if(!Array.isArray(imported)||imported.length===0){
-          setStatus("Invalid data format","error");
-          return;
-        }
-        const first=imported[0];
-        if(typeof first.t!=="number"||typeof first.x!=="number"||typeof first.y!=="number"||typeof first.z!=="number"){
-          setStatus("Invalid data format: missing t,x,y,z","error");
-          return;
-        }
-        samples=imported.slice();
-        analysisCache=null;
-        setStatus("Imported "+samples.length+" samples","success");
-        analyze();
-      }catch(err){
-        setStatus("Import error: "+err.message,"error");
-      }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
-}
-document.getElementById("cutoffFreq").addEventListener("change",()=>{analysisCache=null;if(samples.length>=32)analyze()});
+function downloadRecording(){if(recordingBuffer.length===0){document.getElementById("recordStatus").textContent="No recorded data.";document.getElementById("recordStatus").className="status warning";return}stopRecording();samples=recordingBuffer.slice();analysisCache=null;try{setStatus("Processing...");prepareAnalysis();updateTimeChart();updateVelocityChart();updateDisplacementChart();document.getElementById("recordStatus").textContent="Downloaded & analyzed "+samples.length+" samples.";document.getElementById("recordStatus").className="status success";setStatus("Analysis complete","success")}catch(e){console.error(e);setStatus("Analysis error: "+e.message,"error")}const csvLines=["t,x,y,z"];for(const s of samples)csvLines.push(s.t+","+s.x+","+s.y+","+s.z);const blob=new Blob([csvLines.join("\n")],{type:"text/csv"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="titan_sense_recording.csv";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url)}
+function exportData(){if(samples.length===0){setStatus("No data to export","warning");return}const blob=new Blob([JSON.stringify(samples)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;const ts=new Date().toISOString().replace(/[:.]/g,"-");a.download="titan_sense_data_"+ts+".json";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);setStatus("Data exported ("+samples.length+" samples)","success")}
+function importData(){const input=document.createElement("input");input.type="file";input.accept=".json,application/json";input.onchange=function(e){const file=e.target.files[0];if(!file)return;const fr=new FileReader();fr.onload=function(evt){try{const imported=JSON.parse(evt.target.result);if(!Array.isArray(imported)||imported.length===0){setStatus("Invalid data format","error");return}for(let i=0;i<Math.min(imported.length,5);i++){const f=imported[i];if(typeof f.t!=="number"||typeof f.x!=="number"||typeof f.y!=="number"||typeof f.z!=="number"){setStatus("Invalid data format: missing t,x,y,z","error");return}}samples=imported.slice();analysisCache=null;setStatus("Imported "+samples.length+" samples","success");analyze()}catch(err){setStatus("Import error: "+err.message,"error")}};fr.readAsText(file)};input.click()}
+document.getElementById("cutoffFreq").addEventListener("change",()=>{analysisCache=null;if(samples.length>=16)analyze()});
 document.getElementById("sampleRate").addEventListener("change",()=>{analysisCache=null});
-document.getElementById("fftSize").addEventListener("change",()=>{if(samples.length>=32){analysisCache=null;updateFFT()}});
-document.getElementById("stftWindow").addEventListener("change",()=>{if(samples.length>=32)drawSTFT()});
-document.getElementById("stftHop").addEventListener("change",()=>{if(samples.length>=32)drawSTFT()});
-document.getElementById("stftAxis").addEventListener("change",()=>{if(samples.length>=32)drawSTFT()});
-document.getElementById("baudRate").addEventListener("change",()=>{if(serialPort)setStatus("Baud rate will apply on next connection")});
-window.addEventListener("resize",()=>{const active=document.querySelector(".tab.active");if(active&&active.dataset.view==="stftView")drawSTFT()});
-setStatus("Ready");
+document.getElementById("fftSize").addEventListener("change",()=>{if(samples.length>=16){analysisCache=null;const active=document.querySelector(".tab.active");if(active){const v=active.dataset.view;if(v==="fftView")updateFFTChart();else if(v==="phaseView")updatePhaseChart()}}});
+document.getElementById("winType").addEventListener("change",()=>{if(samples.length>=16){const active=document.querySelector(".tab.active");if(active){const v=active.dataset.view;if(v==="fftView")updateFFTChart();else if(v==="phaseView")updatePhaseChart();else if(v==="stftView")drawSTFT()}}});
+document.getElementById("fftAxis").addEventListener("change",()=>{if(samples.length>=16)updateFFTChart()});
+document.getElementById("fftSource").addEventListener("change",()=>{if(samples.length>=16)updateFFTChart()});
+["stftWindow","stftHop","stftAxis","stftSource","stftCmap","stftDbRange"].forEach(id=>{document.getElementById(id).addEventListener("change",()=>{if(samples.length>=16)drawSTFT()})});
+window.addEventListener("resize",()=>{const a=document.querySelector(".tab.active");if(a&&a.dataset.view==="stftView")drawSTFT()});
+setStatus("Ready — press Start Test to load demo data");
 </script>
 </body>
 </html>
